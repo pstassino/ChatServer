@@ -12,7 +12,7 @@
   "main": "./server.js",  
   "keywords": [
     "azure",
-    "boilerplate"
+    "socket.io"
   ],  
   "noAnalyze": true,
   "license": "Apache",
