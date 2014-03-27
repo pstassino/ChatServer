@@ -1,12 +1,12 @@
 {
-  "name": "WebMatrixNodeJsSite",
+  "name": "sioChatServer",
   "version": "0.1.0",
-  "author": "The WebMatrix Team <webmatrix@microsoft.com>",
+  "author": "Panos Sstassinopoulos>",
   "description": "A simple boilerplate for building node applications on Windows Azure (or wherever)",
   "contributors": [ 
     {
-      "name": "Justin Beckwith",
-      "email": "justbe@microsoft.com"
+      "name": "Panos stassinopoulos",
+      "email": "pstassip@gmail.com"
     } 
   ],  
   "main": "./server.js",  
