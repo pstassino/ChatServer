@@ -17,29 +17,24 @@
     </style>
 
     <script>
-      var app = angular.module("ChatServer", []);
-      app.controller("ChatController", function($scope) {
-        $scope.socket = io.connect();
+      function ChatController($scope) {
+        var socket = io.connect();
         $scope.messages = [];
         $scope.roster = [];
         $scope.text = '';
-
-        $scope.socket.on('connect', function () {
-            $scope.socket.emit('adduser', prompt("What's your name?"));
+        socket.on('connect', function () {
+            socket.emit('adduser', prompt("What's your name?"));
         });
-
-        $scope.socket.on('updatechat', function (name, msg) {
+        socket.on('updatechat', function (name, msg) {
           $scope.messages.push({name:name, msg:msg} );
           $scope.$apply();
         });
-
-        $scope.socket.on('updateusers', function (names) {
+        socket.on('updateusers', function (names) {
           $scope.roster = names;
           $scope.$apply();
         });
-
         $scope.send = function send() {
-          $scope.socket.emit('sendchat', $scope.text);
+          socket.emit('sendchat', $scope.text);
           $scope.text = '';
         };
       }
