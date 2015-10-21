@@ -9,7 +9,7 @@
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
     
     <style>
       body {
@@ -17,22 +17,27 @@
     </style>
 
     <script>
-      function ChatController($scope) {
+      var app = angular.module("ChatServer", []);
+      app.controller("ChatController", function($scope) {
         var socket = io.connect();
         $scope.messages = [];
         $scope.roster = [];
         $scope.text = '';
+
         socket.on('connect', function () {
             socket.emit('adduser', prompt("What's your name?"));
         });
+
         socket.on('updatechat', function (name, msg) {
           $scope.messages.push({name:name, msg:msg} );
           $scope.$apply();
         });
+
         socket.on('updateusers', function (names) {
           $scope.roster = names;
           $scope.$apply();
         });
+
         $scope.send = function send() {
           socket.emit('sendchat', $scope.text);
           $scope.text = '';
