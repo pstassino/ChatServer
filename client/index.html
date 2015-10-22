@@ -1,12 +1,14 @@
 <!doctype html>
-<html lang="en" ng-app>
+<html lang="en" ng-app="ChatApp">
   <head>
     <title>Chat Room</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 
-    <script src="/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
     <script src="/js/angular.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
 
@@ -16,7 +18,10 @@
     </style>
 
     <script>
+      var app = angular.module("ChatApp", []);
+     // app.controller("ChatController", function($scope) {
       function ChatController($scope) {
+
         var socket = io.connect();
         $scope.messages = [];
         $scope.roster = [];
@@ -42,56 +47,67 @@
 
   </head>
   <body>
-    <div class="container" ng-controller="ChatController">
-
-      <div class="navbar navbar-fixed-top navbar-inverse">
-        <div class="navbar-inner">
-          <div class="pull-right">
-            <a href="http://pstassino.wordpress.com" class="brand">pstassino blog</a>
+    <nav class="navbar navbar-inverse">
+          <div class="container-fluid">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="caret"></span> My Blogs</a>
+                  <ul class="dropdown-menu">
+                    <li><a href="http://pstassino.wordpress.com">Wordpress</a></li>
+                    <li><a href="http://pstassino.blogspot.gr">Blogspot</a></li>
+                  </ul>
+                </li>
+                <li><a href="https://sites.google.com/site/pstassinop"> My Site</a></li> 
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            </ul>
           </div>
-        </div>
-      </div>
+        </nav>
 
+    <div class="container" ng-controller="ChatController">
       <div class="page-header">
         <h1>Chat Room</h1>
       </div>
       
       <div class="row">
-          <div class="col-sm-3">
-            <ul class="nav nav-list well">
-              <li class="nav-header">Users</li>
-              <li ng-repeat="user in roster" ng-bind="user"></li>
-            </ul>
-          </div>
-          <div class="col-sm-8">
-            <table class="table table-striped table-bordered">
-              <thead>
-                <tr>
-                  <th class="col-sm-2">Name</th>
-                  <th class="col-sm-6">Text</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr ng-repeat="msg in messages">
-                  <td class="col-sm-2" ng-bind="msg.name"></td>
-                  <td class="col-sm-6" ng-bind="msg.msg"></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-      </div>
-        
-      <div class="row controls">
-          <div class="col-sm-3">
-          </div>
-          <div class="col-sm-6">
-          <form class="form-group" ng-submit="send()">
-                  <input type="text" class="form-control input-md" ng-model="text" placeholder="Message">
-                  <input type="submit" class="btn btn-primary" value="Send" ng-disabled="!text">
-          </form>
-          </div>
-      </div>
-          
+        <div class="col-sm-3">
+          <ul class="nav nav-list well">
+            <li class="nav-header glyphicon glyphicon-user"> Users</li>
+            <br />
+            <li ng-repeat="user in roster" ng-bind="user"></li>
+          </ul>
+        </div>
+        <div class="col-sm-8">
+          <table class="table table-striped table-bordered">
+            <thead>
+              <tr>
+                <th class="col-sm-2">Name</th>
+                <th class="col-sm-6">Text</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="msg in messages">
+                <td class="col-sm-2" ng-bind="msg.name"></td>
+                <td class="col-sm-6" ng-bind="msg.msg"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
     </div>
-  </body>
+        
+    <div class="row">
+      <div class="col-sm-3">
+      </div>
+      <div class="col-sm-8">
+        <form class="form-group" ng-submit="send()">
+          <textarea class="form-control" rows="6" ng-model="text"></textarea>
+          <input type="submit" class="btn btn-primary" value="Send Message" ng-disabled="!text">
+        </form>
+      </div>
+    </div>
+          
+  </div>
+</body>
 </html>
