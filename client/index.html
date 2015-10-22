@@ -1,24 +1,22 @@
-
-<!DOCTYPE html>
-<html lang="en" ng-app="ChatServer">
+<!doctype html>
+<html lang="en" ng-app>
   <head>
     <title>Chat Room</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
 
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/angular.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
-    
+
     <style>
       body {
-        padding-top: 60px;}
+        padding-top: 60px; }
     </style>
 
     <script>
-      var app = angular.module("ChatServer", []);
-      app.controller("ChatController", function($scope) {
+      function ChatController($scope) {
         var socket = io.connect();
         $scope.messages = [];
         $scope.roster = [];
@@ -27,23 +25,21 @@
         socket.on('connect', function () {
             socket.emit('adduser', prompt("What's your name?"));
         });
-
         socket.on('updatechat', function (name, msg) {
-          $scope.messages.push({name:name, msg:msg} );
+          $scope.messages.push( {name:name, msg:msg} );
           $scope.$apply();
         });
-
         socket.on('updateusers', function (names) {
           $scope.roster = names;
           $scope.$apply();
         });
-
         $scope.send = function send() {
           socket.emit('sendchat', $scope.text);
           $scope.text = '';
         };
       }
     </script>
+
   </head>
   <body>
     <div class="container" ng-controller="ChatController">
@@ -51,7 +47,7 @@
       <div class="navbar navbar-fixed-top navbar-inverse">
         <div class="navbar-inner">
           <div class="pull-right">
-            <a href="http://pstassino.wordpress.com" class="brand">pstassino's blog</a>
+            <a href="http://pstassino.wordpress.com" class="brand">pstassino blog</a>
           </div>
         </div>
       </div>
@@ -96,8 +92,6 @@
           </div>
       </div>
           
-      
-
     </div>
   </body>
 </html>
